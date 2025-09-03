@@ -13,7 +13,7 @@ import { OauthForm } from '@/app/auth/_components/oauth-form';
 
 export default function SignUpPage() {
     return (
-        <div className='flex justify-center items-center bg-gradient-to-br from-background to-card p-4 min-h-screen'>
+        <div className='flex justify-center items-center p-4 min-h-screen'>
             <div className='w-full max-w-md'>
                 <Card className='bg-card/80 shadow-lg backdrop-blur-sm border-0'>
                     <CardHeader className='space-y-4 text-center'>
@@ -30,9 +30,7 @@ export default function SignUpPage() {
                         </div>
                     </CardHeader>
                     <CardContent className='space-y-6'>
-                        {/* FORM ENTRY */}
                         <SignInForm />
-
                         <div className='relative'>
                             <div className='absolute inset-0 flex items-center'>
                                 <Separator className='w-full' />

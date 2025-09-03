@@ -211,7 +211,7 @@ export default function DashboardPage() {
     }
 
     return (
-        <div className='bg-background min-h-screen'>
+        <div className='min-h-screen'>
             <div className='space-y-6 mx-auto p-4 max-w-4xl'>
                 <div className='flex justify-between items-center'>
                     <div className='flex items-center space-x-4'>

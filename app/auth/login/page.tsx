@@ -13,7 +13,7 @@ import { OauthForm } from '@/app/auth/_components/oauth-form';
 
 export default async function LoginPage() {
     return (
-        <div className='flex justify-center items-center bg-gradient-to-br from-background to-card p-4 min-h-screen'>
+        <div className='flex justify-center items-center p-4 min-h-screen'>
             <div className='w-full max-w-md'>
                 <Card className='bg-card/80 shadow-lg backdrop-blur-sm border-0'>
                     <CardHeader className='space-y-4 text-center'>
