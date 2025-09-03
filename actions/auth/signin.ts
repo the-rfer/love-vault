@@ -8,6 +8,7 @@ type StateType =
           error: {
               email: string | undefined;
               password: string | undefined;
+              confirmPassword: string | undefined;
               general?: undefined;
           };
           success: boolean;
@@ -17,6 +18,7 @@ type StateType =
               general: string;
               email?: undefined;
               password?: undefined;
+              confirmPassword?: undefined;
           };
           success: boolean;
       }
@@ -25,17 +27,24 @@ type StateType =
           success: boolean;
       };
 
-const loginSchema = z.object({
-    email: z.email({ message: 'Invalid email address' }),
-    password: z
-        .string()
-        .min(6, { message: 'Password must be at least 6 characters long' }),
-});
+const signupSchema = z
+    .object({
+        email: z.email({ message: 'Invalid email address' }),
+        password: z
+            .string()
+            .min(6, { message: 'Password must be at least 6 characters long' }),
+        confirmPassword: z.string(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords don't match",
+        path: ['confirmPassword'],
+    });
 
-export async function loginAction(state: StateType, formData: FormData) {
-    const validatedFields = loginSchema.safeParse({
+export async function signinAction(_: StateType, formData: FormData) {
+    const validatedFields = signupSchema.safeParse({
         email: formData.get('email'),
         password: formData.get('password'),
+        confirmPassword: formData.get('confirmPassword'),
     });
 
     if (!validatedFields.success) {
@@ -45,6 +54,7 @@ export async function loginAction(state: StateType, formData: FormData) {
             error: {
                 email: fieldErrors.email?.join(', '),
                 password: fieldErrors.password?.join(', '),
+                confirmPassword: fieldErrors.confirmPassword?.join(', '),
             },
             success: false,
         };
@@ -54,7 +64,7 @@ export async function loginAction(state: StateType, formData: FormData) {
 
     const supabase = await createClient();
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signUp({
         email,
         password,
     });

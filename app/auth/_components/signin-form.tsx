@@ -1,35 +1,33 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { loginAction } from '@/actions/login-action';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useActionState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { signinAction } from '@/actions/auth/signin';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const initialState = {
     error: {
         email: undefined,
         password: undefined,
+        confirmPassword: undefined,
         general: undefined,
     },
     success: false,
 };
 
-export function LoginForm() {
+export function SignInForm() {
     const router = useRouter();
 
     const [state, formAction, pending] = useActionState(
-        loginAction,
+        signinAction,
         initialState
     );
 
-    console.log('LoginForm state:', state);
-
     useEffect(() => {
         if (state.success) {
-            console.log('Redirecting...');
-            router.push('/dashboard');
+            router.push('/auth/check-email');
         }
     }, [state.success, router]);
 
@@ -65,6 +63,22 @@ export function LoginForm() {
                     </p>
                 )}
             </div>
+            <div className='space-y-2'>
+                <Label htmlFor='password'>Confirm Password</Label>
+                <Input
+                    id='confirmPassword'
+                    name='confirmPassword'
+                    type='password'
+                    placeholder='Confirm your password'
+                    required
+                    className='h-11'
+                />
+                {state.error?.confirmPassword && (
+                    <p className='text-red-600 text-sm'>
+                        {state.error?.confirmPassword}
+                    </p>
+                )}
+            </div>
             {state.error?.general && (
                 <p className='text-red-600 text-sm'>{state.error?.general}</p>
             )}
@@ -77,7 +91,7 @@ export function LoginForm() {
                     ? 'Please wait…'
                     : state.success
                     ? 'Redirecting...'
-                    : 'sign in'}
+                    : 'sign up'}
             </Button>
         </form>
     );

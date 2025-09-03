@@ -8,8 +8,8 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { LoginForm } from './_components/login-form';
-import { OauthForm } from './_components/oauth-form';
+import { LoginForm } from '@/app/auth/_components/login-form';
+import { OauthForm } from '@/app/auth/_components/oauth-form';
 
 export default async function LoginPage() {
     return (

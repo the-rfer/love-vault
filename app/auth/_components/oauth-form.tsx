@@ -1,9 +1,9 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { oauthLoginAction } from '@/actions/oauth-action';
 import { useActionState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { oauthLoginAction } from '@/actions/auth/oauth';
+import { Button } from '@/components/ui/button';
 
 const initialState = {
     error: {

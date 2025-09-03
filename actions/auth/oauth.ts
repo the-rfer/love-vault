@@ -23,10 +23,7 @@ const oauthSchema = z.object({
     }),
 });
 
-export async function oauthLoginAction(
-    state: OauthStateType,
-    formData: FormData
-) {
+export async function oauthLoginAction(_: OauthStateType, formData: FormData) {
     const validatedFields = oauthSchema.safeParse({
         provider: formData.get('provider'),
     });
