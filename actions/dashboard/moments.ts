@@ -13,8 +13,8 @@ export async function fetchMoments(
         .from('moments')
         .select('*')
         .eq('user_id', userId)
-        .order('created_at', { ascending: false })
-        .range(offset, offset + 19);
+        .order('moment_date', { ascending: false })
+        .range(offset, offset + 9);
 
     if (error) {
         console.error('Error fetching more moments:', error);

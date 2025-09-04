@@ -7,19 +7,26 @@ import { Timeline } from '@/app/dashboard/_components/timeline-items';
 import { Loading } from '@/components/loading';
 import { type Moment } from '../types';
 
-export function TimelineClient({
-    initialMoments,
-    userId,
-}: {
-    initialMoments: Moment[];
-    userId: string;
-}) {
-    const [moments, setMoments] = useState(initialMoments);
-    const [offset, setOffset] = useState(initialMoments.length);
-    const [hasMore, setHasMore] = useState(initialMoments.length === 10);
+export function TimelineClient({ userId }: { userId: string }) {
+    const [moments, setMoments] = useState<Moment[]>([]);
+    const [offset, setOffset] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [isPending, startTransition] = useTransition();
 
-    const { ref, inView } = useInView({ threshold: 0.1 });
+    const { ref, inView } = useInView({ threshold: 0.2 });
+
+    // Fetch first page on mount
+    useEffect(() => {
+        startTransition(async () => {
+            setLoading(true);
+            const initial = await fetchMoments(userId, 0);
+            setMoments(initial);
+            setOffset(initial.length);
+            setHasMore(initial.length === 10);
+            setLoading(false);
+        });
+    }, [userId]);
 
     // Load more when in view
     useEffect(() => {
@@ -28,10 +35,18 @@ export function TimelineClient({
                 const more = await fetchMoments(userId, offset);
                 setMoments((prev) => [...prev, ...more]);
                 setOffset((prev) => prev + more.length);
-                setHasMore(more.length === 20);
+                setHasMore(more.length === 10);
             });
         }
     }, [inView, hasMore, isPending, offset, userId]);
+
+    if (loading) {
+        return (
+            <div className='flex justify-center p-8'>
+                <Loading />
+            </div>
+        );
+    }
 
     return (
         <div className='space-y-4'>

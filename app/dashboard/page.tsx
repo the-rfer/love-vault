@@ -23,12 +23,12 @@ export default async function DashboardPage() {
 
     if (!profile) redirect('/onboarding');
 
-    const { data: moments } = await supabase
-        .from('moments')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(10);
+    // const { data: moments } = await supabase
+    //     .from('moments')
+    //     .select('*')
+    //     .eq('user_id', user.id)
+    //     .order('created_at', { ascending: false })
+    //     .limit(10);
 
     return (
         <div className='space-y-6 mx-auto p-4 w-4xl'>
@@ -43,7 +43,7 @@ export default async function DashboardPage() {
 
             <Suspense fallback={<LoadingSpinner />}>
                 <TimelineClient
-                    initialMoments={moments || []}
+                    // initialMoments={moments || []}
                     userId={user.id}
                 />
             </Suspense>

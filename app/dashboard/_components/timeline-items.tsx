@@ -58,13 +58,6 @@ export function Timeline({ items }: TimelineProps) {
         if (items.length > 0) fetchSignedUrls();
     }, [items]);
 
-    //FIXME: This is a workaround - ideally the backend should return sorted data but ordering by moment_date causes ids to be duplicated.
-    const sortedItems = [...items].sort((a, b) => {
-        if (a.moment_date > b.moment_date) return -1;
-        if (a.moment_date < b.moment_date) return 1;
-        return 0;
-    });
-
     if (items.length === 0) {
         return (
             <Card>
@@ -117,8 +110,9 @@ export function Timeline({ items }: TimelineProps) {
                     animate='visible'
                 >
                     <AnimatePresence>
-                        {sortedItems.map((item, index) => {
+                        {items.map((item, index) => {
                             const url = signedUrls[item.id];
+                            console.log('item: ', item);
                             return (
                                 <motion.div
                                     key={item.id}
@@ -138,7 +132,7 @@ export function Timeline({ items }: TimelineProps) {
                                     <div className='flex-1 pb-4'>
                                         <Link
                                             href={`/moments/${item.id}`}
-                                            className='block hover:bg-muted/50 -m-3 p-3 rounded-lg transition-colors'
+                                            className='block hover:bg-muted/10 -m-3 p-3 rounded-lg transition-colors'
                                         >
                                             <div className='flex justify-between items-start'>
                                                 <div className='flex-1'>

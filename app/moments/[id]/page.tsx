@@ -188,7 +188,7 @@ export default function MomentDetailsPage() {
                                             {moment.title}
                                         </h1>
                                         <div className='flex items-center space-x-4 mt-2'>
-                                            <div className='flex items-center space-x-1 text-muted-foreground text-sm'>
+                                            <div className='flex items-center space-x-1 text-muted dark:text-muted-foreground text-sm'>
                                                 <Calendar className='w-4 h-4' />
                                                 <span>
                                                     {formatDate(
@@ -196,7 +196,7 @@ export default function MomentDetailsPage() {
                                                     )}
                                                 </span>
                                             </div>
-                                            <div className='flex items-center space-x-1 text-muted-foreground text-sm'>
+                                            <div className='flex items-center space-x-1 text-muted dark:text-muted-foreground text-sm'>
                                                 <Clock className='w-4 h-4' />
                                                 <span>
                                                     Added{' '}
