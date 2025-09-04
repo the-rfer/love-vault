@@ -3,7 +3,7 @@
 import { useState, useTransition, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { fetchMoments } from '@/actions/dashboard/moments';
-import { Timeline } from '@/components/timeline';
+import { Timeline } from '@/app/dashboard/_components/timeline-items';
 import { Loading } from '@/components/loading';
 import { type Moment } from '../types';
 

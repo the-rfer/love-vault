@@ -1,6 +1,6 @@
--- Create storage bucket for moment media files
+-- Create storage bucket for moment media files (private)
 insert into storage.buckets (id, name, public)
-values ('moment-media', 'moment-media', true)
+values ('moment-media', 'moment-media', false)
 on conflict (id) do nothing;
 
 -- Create storage policies for moment media
@@ -20,9 +20,10 @@ create policy "moment_media_delete_own"
   on storage.objects for delete
   using (bucket_id = 'moment-media' and auth.uid()::text = (storage.foldername(name))[1]);
 
--- Create storage bucket for profile photos
+
+-- Create storage bucket for profile photos (private)
 insert into storage.buckets (id, name, public)
-values ('profile-photos', 'profile-photos', true)
+values ('profile-photos', 'profile-photos', false)
 on conflict (id) do nothing;
 
 -- Create storage policies for profile photos
