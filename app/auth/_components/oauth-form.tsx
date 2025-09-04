@@ -23,8 +23,6 @@ export function OauthForm({ provider }: { provider: Providers }) {
         initialState
     );
 
-    console.log('oauthForm state:', state);
-
     useEffect(() => {
         if (state.success) {
             console.log('Redirecting...');

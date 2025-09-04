@@ -4,9 +4,11 @@ const nextConfig: NextConfig = {
     /* config options here */
     images: {
         remotePatterns: [
-            new URL(
-                'https://emprbekhhsujukwxwmzj.supabase.co/storage/v1/object/**'
-            ),
+            {
+                protocol: 'https',
+                hostname: 'emprbekhhsujukwxwmzj.supabase.co',
+                pathname: '/storage/v1/object/**',
+            },
         ],
     },
 };

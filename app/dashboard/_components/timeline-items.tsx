@@ -6,7 +6,7 @@ import { motion, AnimatePresence, type Easing } from 'framer-motion';
 import { CalendarIcon, ImageIcon, TimerReset } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { getSignedUrl } from '@/actions/dashboard/signed-url';
+import { getSignedUrl } from '@/actions/signed-url';
 
 interface TimelineItem {
     id: string;

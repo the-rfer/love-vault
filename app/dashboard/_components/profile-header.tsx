@@ -3,7 +3,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Settings } from 'lucide-react';
-import { getSignedUrl } from '@/actions/dashboard/signed-url';
+import { getSignedUrl } from '@/actions/signed-url';
 import { type Profile } from '@/app/dashboard/types';
 
 export async function ProfileHeader({ profile }: { profile: Profile }) {

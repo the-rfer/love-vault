@@ -10,8 +10,15 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { LoginForm } from '@/app/auth/_components/login-form';
 import { OauthForm } from '@/app/auth/_components/oauth-form';
+import { redirect, type RedirectType } from 'next/navigation';
+import { getCurrentUserOrRedirect } from '@/actions/auth/user';
 
 export default async function LoginPage() {
+    // TODO: remove in prod, commented so i can debug login page without being redirected and being authenticated
+
+    // const user = await getCurrentUserOrRedirect();
+    // if (user) redirect('/dashboard', RedirectType.replace);
+
     return (
         <div className='flex justify-center items-center p-4 min-h-screen'>
             <div className='w-full max-w-md'>
