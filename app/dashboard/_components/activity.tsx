@@ -13,7 +13,7 @@ import { CalendarIcon } from 'lucide-react';
 //TODO: make these options available as user configurations
 const CONFIG = {
     theme: {
-        light: ['#fdf2f8', '#fce7f3', '#fbcfe8', '#f9a8d4', '#ec4899'],
+        light: ['#ffffff', '#fce7f3', '#fbcfe8', '#f9a8d4', '#db2777'],
         dark: ['#1f2937', '#374151', '#6b7280', '#9ca3af', '#ec4899'],
     },
     labels: {
@@ -61,7 +61,7 @@ export function ActivityCalendarClient({ userId }: { userId: string }) {
 
     return (
         <Card>
-            <CardContent className='mx-auto px-6'>
+            <CardContent className='px-6'>
                 <div className='flex items-center space-x-2 mb-4'>
                     <CalendarIcon className='w-5 h-5 text-primary' />
                     <h2 className='font-semibold text-lg'>

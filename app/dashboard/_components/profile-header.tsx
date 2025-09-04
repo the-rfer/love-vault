@@ -14,7 +14,6 @@ export async function ProfileHeader({ profile }: { profile: Profile }) {
 
     return (
         <div className='flex justify-between items-center'>
-            {/* Avatar + Greeting */}
             <div className='flex items-center space-x-4'>
                 <Avatar className='w-12 h-12'>
                     <AvatarImage src={signedUrl} alt={profile.username} />
@@ -26,13 +25,12 @@ export async function ProfileHeader({ profile }: { profile: Profile }) {
                     <h1 className='font-bold text-foreground text-2xl'>
                         Hello {profile.username} 👋
                     </h1>
-                    <p className='text-muted-foreground'>
+                    <p className='text-muted dark:text-muted-foreground'>
                         Welcome to {profile.partner_name}&apos;s vault!
                     </p>
                 </div>
             </div>
 
-            {/* Controls */}
             <div className='flex items-center space-x-2'>
                 <ThemeToggle />
                 <Button

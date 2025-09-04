@@ -1,91 +1,183 @@
-"use client"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { CalendarIcon, ImageIcon } from "lucide-react"
-import Link from "next/link"
+'use client';
+
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence, type Easing } from 'framer-motion';
+import { CalendarIcon, ImageIcon, TimerReset } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent } from '@/components/ui/card';
+import { getSignedUrl } from '@/actions/dashboard/signed-url';
 
 interface TimelineItem {
-  id: string
-  title: string
-  description: string | null
-  moment_date: string
-  media_urls: string[] | null
-  created_at: string
+    id: string;
+    title: string;
+    description: string | null;
+    moment_date: string;
+    media_urls: string[] | null;
+    created_at: string;
 }
 
 interface TimelineProps {
-  items: TimelineItem[]
-  onLoadMore?: () => void
-  hasMore?: boolean
-  isLoading?: boolean
+    items: TimelineItem[];
 }
 
-export function Timeline({ items, onLoadMore, hasMore = false, isLoading = false }: TimelineProps) {
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
-  }
+export function Timeline({ items }: TimelineProps) {
+    const formatDate = (dateString: string) =>
+        new Date(dateString).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
 
-  if (items.length === 0) {
-    return (
-      <Card>
-        <CardContent className="p-6">
-          <div className="text-center py-8">
-            <CalendarIcon className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">No moments captured yet</p>
-            <p className="text-sm text-muted-foreground">Start by adding your first beautiful moment!</p>
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
+    const [signedUrls, setSignedUrls] = useState<
+        Record<string, string | undefined>
+    >({});
 
-  return (
-    <Card>
-      <CardContent className="p-6">
-        <h2 className="text-lg font-semibold mb-4">Recent Moments</h2>
-        <div className="space-y-4">
-          {items.map((item, index) => (
-            <div key={item.id} className="flex space-x-4">
-              <div className="flex flex-col items-center">
-                <div className="w-3 h-3 bg-primary rounded-full"></div>
-                {index < items.length - 1 && <div className="w-px h-16 bg-border mt-2"></div>}
-              </div>
-              <div className="flex-1 pb-4">
-                <Link
-                  href={`/moments/${item.id}`}
-                  className="block hover:bg-muted/50 rounded-lg p-3 -m-3 transition-colors"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-medium text-foreground">{item.title}</h3>
-                      {item.description && (
-                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{item.description}</p>
-                      )}
-                      <p className="text-xs text-muted-foreground mt-2">{formatDate(item.moment_date)}</p>
+    // Fetch signed URLs for media
+    useEffect(() => {
+        async function fetchSignedUrls() {
+            const urls: Record<string, string | undefined> = {};
+            for (const item of items) {
+                if (item.media_urls?.length) {
+                    try {
+                        urls[item.id] = await getSignedUrl({
+                            path: item.media_urls[0],
+                            bucket: 'moment-media',
+                        });
+                    } catch (error) {
+                        console.error(
+                            'Failed to fetch signed URL for item:',
+                            item.id,
+                            error
+                        );
+                    }
+                }
+            }
+            setSignedUrls(urls);
+        }
+        if (items.length > 0) fetchSignedUrls();
+    }, [items]);
+
+    //FIXME: This is a workaround - ideally the backend should return sorted data but ordering by moment_date causes ids to be duplicated.
+    const sortedItems = [...items].sort((a, b) => {
+        if (a.moment_date > b.moment_date) return -1;
+        if (a.moment_date < b.moment_date) return 1;
+        return 0;
+    });
+
+    if (items.length === 0) {
+        return (
+            <Card>
+                <CardContent className='p-6'>
+                    <div className='py-8 text-center'>
+                        <CalendarIcon className='mx-auto mb-4 w-12 h-12 text-muted-foreground' />
+                        <p className='text-muted-foreground'>
+                            No moments captured yet
+                        </p>
+                        <p className='text-muted-foreground text-sm'>
+                            Start by adding your first beautiful moment!
+                        </p>
                     </div>
-                    {item.media_urls && item.media_urls.length > 0 && (
-                      <div className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center ml-3">
-                        <ImageIcon className="w-5 h-5 text-muted-foreground" />
-                      </div>
-                    )}
-                  </div>
-                </Link>
-              </div>
-            </div>
-          ))}
-          {hasMore && (
-            <div className="text-center pt-4">
-              <Button variant="outline" onClick={onLoadMore} disabled={isLoading} className="bg-transparent">
-                {isLoading ? "Loading..." : "Load More"}
-              </Button>
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  )
+                </CardContent>
+            </Card>
+        );
+    }
+
+    const containerVariants = {
+        hidden: {},
+        visible: {
+            transition: { staggerChildren: 0.2 },
+        },
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: -20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.8,
+                ease: [0.22, 1, 0.36, 1] as Easing,
+            },
+        },
+    };
+
+    return (
+        <Card>
+            <CardContent className='px-6'>
+                <div className='flex items-center space-x-2 mb-4'>
+                    <TimerReset className='w-5 h-5 text-primary' />
+                    <h2 className='font-semibold text-lg'>Recent Moments</h2>
+                </div>
+
+                <motion.div
+                    className='space-y-4'
+                    variants={containerVariants}
+                    initial='hidden'
+                    animate='visible'
+                >
+                    <AnimatePresence>
+                        {sortedItems.map((item, index) => {
+                            const url = signedUrls[item.id];
+                            return (
+                                <motion.div
+                                    key={item.id}
+                                    variants={itemVariants}
+                                    initial='hidden'
+                                    animate='visible'
+                                    exit={{ opacity: 0 }}
+                                    className='flex space-x-4'
+                                >
+                                    <div className='flex flex-col items-center'>
+                                        <div className='bg-primary rounded-full w-3 h-3'></div>
+                                        {index < items.length - 1 && (
+                                            <div className='mt-2 bg-border w-px h-16'></div>
+                                        )}
+                                    </div>
+
+                                    <div className='flex-1 pb-4'>
+                                        <Link
+                                            href={`/moments/${item.id}`}
+                                            className='block hover:bg-muted/50 -m-3 p-3 rounded-lg transition-colors'
+                                        >
+                                            <div className='flex justify-between items-start'>
+                                                <div className='flex-1'>
+                                                    <h3 className='font-medium text-foreground'>
+                                                        {item.title}
+                                                    </h3>
+                                                    {item.description && (
+                                                        <p className='mt-1 text-muted dark:text-muted-foreground text-sm line-clamp-2'>
+                                                            {item.description}
+                                                        </p>
+                                                    )}
+                                                    <p className='mt-2 text-muted dark:text-muted-foreground text-xs'>
+                                                        {formatDate(
+                                                            item.moment_date
+                                                        )}
+                                                    </p>
+                                                </div>
+                                                {item.media_urls?.length && (
+                                                    <Avatar className='rounded-lg'>
+                                                        <AvatarImage
+                                                            src={
+                                                                url || undefined
+                                                            }
+                                                            alt='moment image'
+                                                        />
+                                                        <AvatarFallback>
+                                                            <ImageIcon className='w-6 h-6 text-muted-foreground' />
+                                                        </AvatarFallback>
+                                                    </Avatar>
+                                                )}
+                                            </div>
+                                        </Link>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
+                    </AnimatePresence>
+                </motion.div>
+            </CardContent>
+        </Card>
+    );
 }
