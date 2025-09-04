@@ -205,7 +205,7 @@ export default function EditMomentPage() {
                             <CardTitle className='font-bold text-foreground text-2xl'>
                                 Edit Your Moment
                             </CardTitle>
-                            <CardDescription className='text-muted-foreground'>
+                            <CardDescription className='text-muted dark:text-muted-foreground'>
                                 Update the details of this special memory
                             </CardDescription>
                         </div>

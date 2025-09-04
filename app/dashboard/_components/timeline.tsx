@@ -16,7 +16,6 @@ export function TimelineClient({ userId }: { userId: string }) {
 
     const { ref, inView } = useInView({ threshold: 0.2 });
 
-    // Fetch first page on mount
     useEffect(() => {
         startTransition(async () => {
             setLoading(true);
@@ -28,7 +27,6 @@ export function TimelineClient({ userId }: { userId: string }) {
         });
     }, [userId]);
 
-    // Load more when in view
     useEffect(() => {
         if (inView && hasMore && !isPending) {
             startTransition(async () => {

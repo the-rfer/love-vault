@@ -33,7 +33,6 @@ export function Timeline({ items }: TimelineProps) {
         Record<string, string | undefined>
     >({});
 
-    // Fetch signed URLs for media
     useEffect(() => {
         async function fetchSignedUrls() {
             const urls: Record<string, string | undefined> = {};
@@ -112,7 +111,6 @@ export function Timeline({ items }: TimelineProps) {
                     <AnimatePresence>
                         {items.map((item, index) => {
                             const url = signedUrls[item.id];
-                            console.log('item: ', item);
                             return (
                                 <motion.div
                                     key={item.id}
