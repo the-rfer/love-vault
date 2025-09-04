@@ -186,7 +186,7 @@ export default function EditMomentPage() {
 
     return (
         <div className='bg-background min-h-screen'>
-            <div className='mx-auto p-4 max-w-2xl'>
+            <div className='mx-auto p-4 max-w-4xl'>
                 <div className='mb-6'>
                     <Button variant='ghost' asChild className='mb-4'>
                         <Link href={`/moments/${moment.id}`}>
@@ -262,6 +262,7 @@ export default function EditMomentPage() {
                             </div>
 
                             {/* Existing Media */}
+                            {/* FIXME: add preview of the file instead of random names. */}
                             {existingMediaUrls.length > 0 && (
                                 <div className='space-y-2'>
                                     <Label className='font-medium text-sm'>

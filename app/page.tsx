@@ -22,5 +22,12 @@ export default async function HomePage() {
         }
     }
 
-    redirect('/auth/login');
+    const message = 'You must login to access the app';
+    const type = 'error';
+
+    redirect(
+        `/auth/login?message=${encodeURIComponent(
+            message
+        )}&type=${encodeURIComponent(type)}`
+    );
 }

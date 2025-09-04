@@ -1,11 +1,12 @@
 'use client';
 
-import { useActionState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useActionState, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { loginAction } from '@/actions/auth/login';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
 
 const initialState = {
     error: {
@@ -18,6 +19,36 @@ const initialState = {
 
 export function LoginForm() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+
+    //TODO: find a better way to deal with toast issues, this is a workarround
+    const [hydrated, setHydrated] = useState(false);
+
+    useEffect(() => {
+        setHydrated(true);
+    }, []);
+
+    // handle toast error in case of redirec from server action user.ts
+    useEffect(() => {
+        if (!hydrated) return;
+
+        const message = searchParams.get('message');
+        const type = searchParams.get('type');
+
+        if (message && type) {
+            switch (type) {
+                case 'error':
+                    toast.error(message);
+                    break;
+                case 'success':
+                    toast.success(message);
+                    break;
+                default:
+                    toast.info(message);
+                    break;
+            }
+        }
+    }, [searchParams, hydrated]);
 
     const [state, formAction, pending] = useActionState(
         loginAction,
