@@ -15,13 +15,15 @@ export function CurrentMedia({
     signedUrls,
     setExistingMediaUrls,
     setSignedUrls,
+    setRemovedMediaUrls,
 }: {
     isSigning: boolean;
     signedUrls: SignedMediaWithOriginal[];
     setExistingMediaUrls: Dispatch<SetStateAction<string[]>>;
     setSignedUrls: Dispatch<SetStateAction<SignedMediaWithOriginal[]>>;
+    setRemovedMediaUrls: Dispatch<SetStateAction<string[]>>;
 }) {
-    const removeExistingMedia = async (index: number) => {
+    async function removeExistingMedia(index: number) {
         if (!signedUrls[index]) return;
 
         const media = signedUrls[index];
@@ -34,6 +36,9 @@ export function CurrentMedia({
             prev.filter((url) => url !== media.originalUrl)
         );
 
+        // fix at 5am, double check later. tracking to remove from bucket.
+        setRemovedMediaUrls((prev) => [...prev, media.originalUrl]);
+
         const result = await deleteMedia(media.url);
 
         if (!result.success) {
@@ -45,7 +50,7 @@ export function CurrentMedia({
         } else {
             toast.success('Update Moment to confirm deletion!');
         }
-    };
+    }
 
     return (
         <div className='space-y-2'>

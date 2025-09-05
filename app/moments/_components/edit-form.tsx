@@ -64,6 +64,7 @@ export function EditMomentForm({
     const [isSigning, setIsSigning] = useState(true);
     const [isPending, setIsPending] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const [removedMediaUrls, setRemovedMediaUrls] = useState<string[]>([]);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -79,6 +80,7 @@ export function EditMomentForm({
                 momentDate,
                 files,
                 existingMediaUrls,
+                removedMediaUrls,
             });
             toast.success('Moment updated successfully!');
             router.push(`/moments/${moment.id}`);
@@ -225,6 +227,7 @@ export function EditMomentForm({
                                 signedUrls={signedUrls}
                                 setExistingMediaUrls={setExistingMediaUrls}
                                 setSignedUrls={setSignedUrls}
+                                setRemovedMediaUrls={setRemovedMediaUrls}
                             />
 
                             <div className='space-y-2'>

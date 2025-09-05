@@ -10,6 +10,7 @@ interface UpdateMomentArgs {
     momentDate: Date;
     files: File[];
     existingMediaUrls: string[];
+    removedMediaUrls: string[];
 }
 
 export async function updateMoment({
@@ -20,8 +21,21 @@ export async function updateMoment({
     momentDate,
     files,
     existingMediaUrls,
+    removedMediaUrls,
 }: UpdateMomentArgs) {
     const supabase = await createClient();
+
+    // remove from bucket
+    await Promise.all(
+        removedMediaUrls.map(async (url) => {
+            try {
+                const path = url.split('/').slice(-2).join('/'); // adjust according to your URL scheme
+                await supabase.storage.from('moment-media').remove([path]);
+            } catch (err) {
+                console.error('Failed to delete removed media:', url, err);
+            }
+        })
+    );
 
     // upload new files
     const newMediaUrls: string[] = [];
