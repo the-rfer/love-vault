@@ -1,23 +1,16 @@
 import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
 import { Loading as LoadingSpinner } from '@/components/loading';
 import { ActivityCalendarClient } from './_components/activity';
 import { TimelineClient } from './_components/timeline';
 import { ProfileHeader } from './_components/profile-header';
 import { NewMoment } from './_components/new-moment';
 import { getCurrentUserOrRedirect } from '@/actions/auth/user';
+import { getUserProfile } from '@/actions/profile';
 
 export default async function DashboardPage() {
     const user = await getCurrentUserOrRedirect();
-
-    const supabase = await createClient();
-
-    const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
+    const profile = await getUserProfile(user.id);
 
     if (!profile) redirect('/onboarding');
 
