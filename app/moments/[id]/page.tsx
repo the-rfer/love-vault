@@ -24,6 +24,7 @@ export default async function MomentPage({
 }) {
     const user = await getCurrentUserOrRedirect();
 
+    //TODO: receber params de error no edit
     const { id } = await params;
 
     const supabase = await createClient();

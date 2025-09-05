@@ -1,0 +1,159 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { createMoment } from '@/actions/moments/new';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { DatePicker } from '@/components/date-picker';
+import { FileUpload } from '@/components/file-upload';
+import Link from 'next/link';
+import { useActionState, useState } from 'react';
+import { type User } from '@supabase/supabase-js';
+import { createClient } from '@/lib/supabase/client';
+
+type FormState =
+    | {
+          error: string;
+          success?: undefined;
+      }
+    | {
+          success: boolean;
+          error?: undefined;
+      };
+
+export function NewMomentForm({ user }: { user: User }) {
+    const router = useRouter();
+    const [date, setDate] = useState<Date>(new Date());
+    const [files, setFiles] = useState<File[]>([]);
+
+    async function uploadFiles(files: File[]): Promise<string[]> {
+        if (!user || files.length === 0) return [];
+
+        const supabase = createClient();
+
+        const uploadPromises = files.map(async (file) => {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${user.id}/${Date.now()}-${Math.random()
+                .toString(36)
+                .substring(2)}.${fileExt}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('moment-media')
+                .upload(fileName, file);
+
+            if (uploadError) {
+                console.error('Upload error:', uploadError);
+                return null;
+            }
+
+            const {
+                data: { publicUrl },
+            } = supabase.storage.from('moment-media').getPublicUrl(fileName);
+
+            return publicUrl;
+        });
+
+        const results = await Promise.all(uploadPromises);
+        return results.filter(
+            (url: string | null): url is string => url !== null
+        );
+    }
+
+    const [state, formAction, pending] = useActionState(
+        async (prevState: FormState, formData: FormData) => {
+            const mediaUrls = await uploadFiles(files);
+
+            mediaUrls.forEach((url) => {
+                formData.append('media_urls', url);
+            });
+
+            const result = await createMoment(formData, user.id);
+
+            if (result?.error) {
+                toast.error(result.error);
+                return { error: result.error };
+            }
+
+            toast.success('Moment created successfully!');
+            router.push('/dashboard');
+            return { success: true };
+        },
+        { success: false, error: undefined }
+    );
+
+    return (
+        <form action={formAction} className='space-y-6'>
+            <div className='space-y-2'>
+                <Label htmlFor='title' className='font-medium text-sm'>
+                    Title *
+                </Label>
+                <Input
+                    id='title'
+                    name='title'
+                    placeholder='What happened?'
+                    required
+                    className='h-11'
+                />
+            </div>
+
+            <div className='space-y-2'>
+                <Label htmlFor='description' className='font-medium text-sm'>
+                    Description
+                </Label>
+                <Textarea
+                    id='description'
+                    name='description'
+                    placeholder='Tell us more about this moment...'
+                    rows={4}
+                    className='resize-none'
+                />
+            </div>
+
+            <div className='space-y-2'>
+                <Label className='font-medium text-sm'>Date</Label>
+                <input
+                    type='hidden'
+                    name='momentDate'
+                    value={date.toISOString().split('T')[0]}
+                />
+                <DatePicker
+                    date={date}
+                    onDateChange={(d) => d && setDate(d)}
+                    placeholder='When did this happen?'
+                />
+            </div>
+
+            <div className='space-y-2'>
+                <Label className='font-medium text-sm'>
+                    Photos & Videos (Optional)
+                </Label>
+                <FileUpload
+                    onFilesChange={setFiles}
+                    maxFiles={5}
+                    accept='image/*,video/*'
+                />
+            </div>
+
+            <div className='flex justify-end space-x-3 pt-4'>
+                <Button
+                    type='button'
+                    variant='outline'
+                    asChild
+                    className='bg-transparent'
+                >
+                    <Link href='/dashboard'>Cancel</Link>
+                </Button>
+                <Button
+                    type='submit'
+                    disabled={state.success === true}
+                    className='min-w-[100px]'
+                >
+                    {pending ? 'Creating...' : 'Create Moment'}
+                </Button>
+            </div>
+        </form>
+    );
+}
