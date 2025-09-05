@@ -43,32 +43,19 @@ export function Settings({
     };
 
     return (
-        <div className='bg-background min-h-screen'>
-            <div className='space-y-6 mx-auto p-4 max-w-2xl'>
-                <ProfilePhotoSection
-                    profile={profile}
-                    setProfile={setProfile}
-                    user={user}
-                />
-
-                <PersonalInfoSection
-                    profile={profile}
-                    setProfile={setProfile}
-                />
-
-                <PartnerInfoSection profile={profile} setProfile={setProfile} />
-
-                <Button
-                    onClick={handleSave}
-                    disabled={isSaving}
-                    className='w-full'
-                >
-                    <Save className='mr-2 w-4 h-4' />
-                    {isSaving ? 'Saving...' : 'Save Changes'}
-                </Button>
-
-                <AccountSection />
-            </div>
-        </div>
+        <>
+            <ProfilePhotoSection
+                profile={profile}
+                setProfile={setProfile}
+                user={user}
+            />
+            <PersonalInfoSection profile={profile} setProfile={setProfile} />
+            <PartnerInfoSection profile={profile} setProfile={setProfile} />
+            <Button onClick={handleSave} disabled={isSaving} className='w-full'>
+                <Save className='mr-2 w-4 h-4' />
+                {isSaving ? 'Saving...' : 'Save Changes'}
+            </Button>
+            <AccountSection />
+        </>
     );
 }

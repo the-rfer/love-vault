@@ -398,6 +398,9 @@ import { Settings } from './_components/settings';
 import { getCurrentUserOrRedirect } from '@/actions/auth/user';
 import { getUserProfile } from '@/actions/profile';
 import { getSignedUrl } from '@/actions/signed-url';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 export default async function SettingsPage() {
     const user = await getCurrentUserOrRedirect();
@@ -412,5 +415,20 @@ export default async function SettingsPage() {
         bucket: 'profile-photos',
     });
 
-    return <Settings user={user} profile={profile} />;
+    return (
+        <div className='min-h-screen'>
+            <div className='space-y-6 mx-auto p-4 max-w-4xl'>
+                {/* Header */}
+                <div className='flex items-center space-x-4'>
+                    <Button variant='ghost' asChild>
+                        <Link href='/dashboard'>
+                            <ArrowLeft className='w-4 h-4' />
+                        </Link>
+                    </Button>
+                    <h1 className='font-bold text-2xl'>Settings</h1>
+                </div>
+                <Settings user={user} profile={profile} />
+            </div>
+        </div>
+    );
 }
