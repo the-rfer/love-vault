@@ -1,5 +1,4 @@
 import { Suspense } from 'react';
-import { redirect } from 'next/navigation';
 import { Loading as LoadingSpinner } from '@/components/loading';
 import { ActivityCalendarClient } from './_components/activity';
 import { TimelineClient } from './_components/timeline';
@@ -11,8 +10,6 @@ import { getUserProfile } from '@/actions/profile';
 export default async function DashboardPage() {
     const user = await getCurrentUserOrRedirect();
     const profile = await getUserProfile(user.id);
-
-    if (!profile) redirect('/onboarding');
 
     return (
         <div className='space-y-6 mx-auto p-4 w-4xl'>

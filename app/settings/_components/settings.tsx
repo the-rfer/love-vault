@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -31,6 +32,8 @@ export function Settings({
     const [profile, setProfile] = useState<Profile>(initialProfile);
     const [isSaving, setIsSaving] = useState(false);
 
+    const router = useRouter();
+
     const handleSave = async () => {
         setIsSaving(true);
         const result = await updateProfile(user.id, profile);
@@ -40,6 +43,7 @@ export function Settings({
             toast.success('Profile updated successfully!');
         }
         setIsSaving(false);
+        router.push('/dashboard');
     };
 
     return (

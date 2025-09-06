@@ -12,6 +12,8 @@ import {
     deleteProfilePhoto,
 } from '@/actions/settings/avatar';
 import { Profile } from './settings';
+import { useEffect, useState, type ChangeEvent } from 'react';
+import { getSignedUrl } from '@/actions/signed-url';
 
 export function ProfilePhotoSection({
     profile,
@@ -22,25 +24,49 @@ export function ProfilePhotoSection({
     setProfile: (p: Profile) => void;
     user: User;
 }) {
-    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const [signedUrl, setSignedUrl] = useState<string | null>(null);
+
+    async function handleUpload(e: ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0];
         if (!file) return;
+
         const res = await uploadProfilePhoto(user.id, file);
+
         if (res.error) toast.error(res.error);
         else if (res.url) {
             setProfile({ ...profile, profile_photo_url: res.url });
             toast.success('Profile photo updated!');
         }
-    };
+    }
 
-    const handleDelete = async () => {
-        const res = await deleteProfilePhoto(user.id);
+    async function handleDelete() {
+        const res = await deleteProfilePhoto(
+            user.id,
+            profile.profile_photo_url!
+        );
+
         if (res.error) toast.error(res.error);
         else {
             setProfile({ ...profile, profile_photo_url: null });
+            setSignedUrl(null);
             toast.success('Profile photo deleted!');
         }
-    };
+    }
+
+    useEffect(() => {
+        async function updateUrl() {
+            if (!profile.profile_photo_url) return;
+
+            const signedPhotoUrl = await getSignedUrl({
+                path: profile.profile_photo_url,
+                bucket: 'profile-photos',
+            });
+
+            if (signedPhotoUrl) setSignedUrl(signedPhotoUrl);
+        }
+
+        updateUrl();
+    }, [profile]);
 
     return (
         <Card>
@@ -50,7 +76,7 @@ export function ProfilePhotoSection({
             <CardContent className='space-y-4'>
                 <div className='flex items-center space-x-4'>
                     <Avatar className='w-20 h-20'>
-                        <AvatarImage src={profile.profile_photo_url!} />
+                        <AvatarImage src={signedUrl!} />
                         <AvatarFallback>
                             {profile.username.charAt(0).toUpperCase()}
                         </AvatarFallback>
