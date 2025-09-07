@@ -7,19 +7,7 @@ import { CalendarIcon, ImageIcon, TimerReset } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { getSignedUrl } from '@/actions/signed-url';
-
-interface TimelineItem {
-    id: string;
-    title: string;
-    description: string | null;
-    moment_date: string;
-    media_urls: string[] | null;
-    created_at: string;
-}
-
-interface TimelineProps {
-    items: TimelineItem[];
-}
+import { TimelineProps } from '@/types/app';
 
 export function Timeline({ items }: TimelineProps) {
     const formatDate = (dateString: string) =>
@@ -138,11 +126,11 @@ export function Timeline({ items }: TimelineProps) {
                                                         {item.title}
                                                     </h3>
                                                     {item.description && (
-                                                        <p className='mt-1 text-muted dark:text-muted-foreground text-sm line-clamp-2'>
+                                                        <p className='mt-1 text-muted-foreground text-sm line-clamp-2'>
                                                             {item.description}
                                                         </p>
                                                     )}
-                                                    <p className='mt-2 text-muted dark:text-muted-foreground text-xs'>
+                                                    <p className='mt-2 text-muted-foreground text-xs'>
                                                         {formatDate(
                                                             item.moment_date
                                                         )}

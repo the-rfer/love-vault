@@ -10,7 +10,7 @@ export function AccountSection() {
     const router = useRouter();
     const handleSignOut = async () => {
         await signOutUser();
-        router.push('/auth/login');
+        router.push('/login');
     };
 
     return (

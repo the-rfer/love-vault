@@ -16,10 +16,10 @@ export default async function NewMomentPage() {
 
     return (
         <div className='bg-background min-h-screen'>
-            <div className='mx-auto p-4 max-w-2xl'>
+            <div className='mx-auto p-4 max-w-4xl'>
                 <div className='mb-6'>
                     <Button variant='ghost' asChild className='mb-4'>
-                        <Link href='/dashboard'>
+                        <Link href='/'>
                             <ArrowLeft className='mr-2 w-4 h-4' />
                             Back to Dashboard
                         </Link>

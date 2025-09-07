@@ -1,13 +1,12 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import { type ActivityData } from '@/app/dashboard/types';
+import { ActivityData } from '@/types/app';
 
 export async function fetchActivity(userId: string): Promise<ActivityData[]> {
     const supabase = await createClient();
 
     try {
-        // Get moments grouped by date for the last year
         const oneYearAgo = new Date();
         oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
@@ -22,7 +21,6 @@ export async function fetchActivity(userId: string): Promise<ActivityData[]> {
             return [];
         }
 
-        // Process data for activity calendar
         const activityMap = new Map<string, number>();
 
         activityMoments?.forEach((moment) => {
@@ -30,7 +28,6 @@ export async function fetchActivity(userId: string): Promise<ActivityData[]> {
             activityMap.set(date, (activityMap.get(date) || 0) + 1);
         });
 
-        // Generate activity data for the last year
         const activity: ActivityData[] = [];
         const today = new Date();
         const startDate = new Date(oneYearAgo);

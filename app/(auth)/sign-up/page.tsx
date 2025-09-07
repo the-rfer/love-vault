@@ -8,8 +8,8 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Heart } from 'lucide-react';
-import { SignInForm } from '@/app/auth/_components/signin-form';
-import { OauthForm } from '@/app/auth/_components/oauth-form';
+import { SignInForm } from '@/app/(auth)/_components/signin-form';
+import { OauthForm } from '@/app/(auth)/_components/oauth-form';
 
 export default function SignUpPage() {
     return (
@@ -50,7 +50,7 @@ export default function SignUpPage() {
                         <div className='text-muted-foreground text-sm text-center'>
                             Already have an account?{' '}
                             <Link
-                                href='/auth/login'
+                                href='/login'
                                 className='font-medium text-primary hover:underline'
                             >
                                 Sign in

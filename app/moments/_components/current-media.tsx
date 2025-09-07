@@ -8,7 +8,7 @@ import { Trash2, Video, ImageIcon } from 'lucide-react';
 import { ImageLoader } from './image-loader';
 import { Loading } from '@/components/loading';
 import { deleteMedia } from '@/actions/moments/delete-media';
-import { SignedMediaWithOriginal } from './edit-form';
+import { SignedMediaWithOriginal } from '@/types/app';
 
 export function CurrentMedia({
     isSigning,
@@ -31,12 +31,10 @@ export function CurrentMedia({
         // Optimistically remove from UI
         setSignedUrls((prev) => prev.filter((_, i) => i !== index));
 
-        // Remove from existingMediaUrls if it's an existing URL
         setExistingMediaUrls((prev) =>
             prev.filter((url) => url !== media.originalUrl)
         );
 
-        // fix at 5am, double check later. tracking to remove from bucket.
         setRemovedMediaUrls((prev) => [...prev, media.originalUrl]);
 
         const result = await deleteMedia(media.url);

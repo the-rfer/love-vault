@@ -3,7 +3,6 @@ import { getUserProfile } from '@/actions/profile';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-
 import { Settings } from './_components/settings';
 
 export default async function SettingsPage() {
@@ -15,7 +14,7 @@ export default async function SettingsPage() {
             <div className='space-y-6 mx-auto p-4 max-w-4xl'>
                 <div className='flex items-center space-x-4'>
                     <Button variant='ghost' asChild>
-                        <Link href='/dashboard'>
+                        <Link href='/'>
                             <ArrowLeft className='w-4 h-4' />
                         </Link>
                     </Button>

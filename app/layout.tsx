@@ -28,8 +28,17 @@ export default function RootLayout({
     return (
         <html lang='en' suppressHydrationWarning>
             <body
-                className={`font-sans ${geistSans.variable} ${geistMono.variable} bg-gradient-to-br from-background antialiased to-card min-h-screen w-screen overflow-x-hidden`}
+                className={`font-sans ${geistSans.variable} ${geistMono.variable} bg-background antialiased   min-h-screen w-screen overflow-x-hidden relative`}
             >
+                <div
+                    className='-z-10 absolute inset-0'
+                    style={{
+                        backgroundImage: `
+        radial-gradient(125% 125% at 50% 10%, var(--background) 40%, var(--primary) 100%)
+      `,
+                        backgroundSize: '100% 100%',
+                    }}
+                />
                 <ThemeProvider
                     attribute='class'
                     defaultTheme='system'

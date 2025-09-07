@@ -12,16 +12,7 @@ import { FileUpload } from '@/components/file-upload';
 import Link from 'next/link';
 import { useActionState, useEffect, useState } from 'react';
 import { type User } from '@supabase/supabase-js';
-
-type FormState =
-    | {
-          error: string;
-          success?: undefined;
-      }
-    | {
-          success: boolean;
-          error?: undefined;
-      };
+import { MomentActionState } from '@/types/app';
 
 export function NewMomentForm({ user }: { user: User }) {
     const router = useRouter();
@@ -29,7 +20,7 @@ export function NewMomentForm({ user }: { user: User }) {
     const [files, setFiles] = useState<File[]>([]);
 
     const [state, formAction, pending] = useActionState(
-        async (prevState: FormState, formData: FormData) => {
+        async (prevState: MomentActionState, formData: FormData) => {
             files.forEach((url) => {
                 formData.append('files', url);
             });
@@ -41,7 +32,7 @@ export function NewMomentForm({ user }: { user: User }) {
             }
 
             toast.success('Moment created successfully!');
-            router.push('/dashboard');
+            router.push('/');
             return { success: true };
         },
         { success: false, error: undefined }
@@ -52,7 +43,7 @@ export function NewMomentForm({ user }: { user: User }) {
             toast.error(state.error);
         } else if (state.success) {
             toast.success('Moment created successfully!');
-            router.push('/dashboard');
+            router.push('/');
         }
     }, [router, state]);
 
@@ -116,7 +107,7 @@ export function NewMomentForm({ user }: { user: User }) {
                     asChild
                     className='bg-transparent'
                 >
-                    <Link href='/dashboard'>Cancel</Link>
+                    <Link href='/'>Cancel</Link>
                 </Button>
                 <Button
                     type='submit'

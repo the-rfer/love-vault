@@ -1,21 +1,8 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { OauthActionState } from '@/types/app';
 import { z } from 'zod';
-
-type OauthStateType =
-    | {
-          error: {
-              general: string | undefined;
-          };
-          success: boolean;
-          redirect?: undefined;
-      }
-    | {
-          error: undefined;
-          success: boolean;
-          redirect: string;
-      };
 
 const oauthSchema = z.object({
     provider: z.enum(['google', 'facebook', 'discord'], {
@@ -23,7 +10,10 @@ const oauthSchema = z.object({
     }),
 });
 
-export async function oauthLoginAction(_: OauthStateType, formData: FormData) {
+export async function oauthLoginAction(
+    _: OauthActionState,
+    formData: FormData
+) {
     const validatedFields = oauthSchema.safeParse({
         provider: formData.get('provider'),
     });
@@ -57,6 +47,6 @@ export async function oauthLoginAction(_: OauthStateType, formData: FormData) {
     return {
         error: undefined,
         success: true,
-        redirect: data?.url ?? '/dashboard',
+        redirect: data?.url ?? '/',
     };
 }

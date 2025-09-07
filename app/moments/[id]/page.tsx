@@ -20,7 +20,7 @@ export interface Moment {
 export default async function MomentPage({
     params,
 }: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }) {
     const user = await getCurrentUserOrRedirect();
 
@@ -45,7 +45,7 @@ export default async function MomentPage({
                 {/* Header */}
                 <div className='mb-6'>
                     <Button variant='ghost' asChild className='mb-4'>
-                        <Link href='/dashboard'>
+                        <Link href='/'>
                             <ArrowLeft className='mr-2 w-4 h-4' />
                             Back to Dashboard
                         </Link>

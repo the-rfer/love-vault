@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { loginAction } from '@/actions/auth/login';
 import { Button } from '@/components/ui/button';
@@ -21,17 +21,7 @@ export function LoginForm() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    //TODO: find a better way to deal with toast issues, this is a workarround
-    const [hydrated, setHydrated] = useState(false);
-
     useEffect(() => {
-        setHydrated(true);
-    }, []);
-
-    // handle toast error in case of redirec from server action user.ts
-    useEffect(() => {
-        if (!hydrated) return;
-
         const message = searchParams.get('message');
         const type = searchParams.get('type');
 
@@ -48,7 +38,7 @@ export function LoginForm() {
                     break;
             }
         }
-    }, [searchParams, hydrated]);
+    }, [searchParams]);
 
     const [state, formAction, pending] = useActionState(
         loginAction,
@@ -57,7 +47,7 @@ export function LoginForm() {
 
     useEffect(() => {
         if (state.success) {
-            router.push('/dashboard');
+            router.push('/');
         }
     }, [state.success, router]);
 
@@ -74,7 +64,9 @@ export function LoginForm() {
                     className='h-11'
                 />
                 {state.error?.email && (
-                    <p className='text-red-600 text-sm'>{state.error?.email}</p>
+                    <p className='text-destructive text-sm'>
+                        {state.error?.email}
+                    </p>
                 )}
             </div>
             <div className='space-y-2'>
@@ -88,13 +80,15 @@ export function LoginForm() {
                     className='h-11'
                 />
                 {state.error?.password && (
-                    <p className='text-red-600 text-sm'>
+                    <p className='text-destructive text-sm'>
                         {state.error?.password}
                     </p>
                 )}
             </div>
             {state.error?.general && (
-                <p className='text-red-600 text-sm'>{state.error?.general}</p>
+                <p className='text-destructive text-sm'>
+                    {state.error?.general}
+                </p>
             )}
             <Button
                 type='submit'

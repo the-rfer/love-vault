@@ -6,10 +6,12 @@ import { ProfileHeader } from './_components/profile-header';
 import { NewMoment } from './_components/new-moment';
 import { getCurrentUserOrRedirect } from '@/actions/auth/user';
 import { getUserProfile } from '@/actions/profile';
+import { redirect } from 'next/navigation';
 
 export default async function DashboardPage() {
     const user = await getCurrentUserOrRedirect();
     const profile = await getUserProfile(user.id);
+    if (!profile.isOnboarded) redirect('/onboarding');
 
     return (
         <div className='space-y-6 mx-auto p-4 w-4xl'>

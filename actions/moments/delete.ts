@@ -50,6 +50,6 @@ export async function deleteMoment(momentId: string) {
         };
     }
 
-    revalidatePath('/dashboard');
+    revalidatePath('/');
     return { success: true, message: 'Moment deleted successfully!' };
 }

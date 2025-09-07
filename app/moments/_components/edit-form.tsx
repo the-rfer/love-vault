@@ -21,24 +21,10 @@ import { Heart, ArrowLeft } from 'lucide-react';
 import { type User } from '@supabase/supabase-js';
 import { deleteMoment } from '@/actions/moments/delete';
 import { updateMoment } from '@/actions/moments/update';
-import { SignedMedia } from './moment-details';
 import { getSignedUrl } from '@/actions/signed-url';
-
 import { DeleteDialogContent } from './delete-dialog';
 import { CurrentMedia } from './current-media';
-
-interface Moment {
-    id: string;
-    title: string;
-    description: string | null;
-    moment_date: string;
-    media_urls: string[] | null;
-    user_id: string;
-}
-
-export interface SignedMediaWithOriginal extends SignedMedia {
-    originalUrl: string;
-}
+import { Moment, SignedMediaWithOriginal } from '@/types/app';
 
 export function EditMomentForm({
     user,
@@ -98,7 +84,7 @@ export function EditMomentForm({
         try {
             await deleteMoment(moment.id);
             toast.success('Moment deleted successfully!');
-            router.push('/dashboard');
+            router.push('/');
         } catch (err) {
             console.error(err);
             toast.error('Failed to delete moment. Please try again.');
@@ -168,7 +154,7 @@ export function EditMomentForm({
                             <CardTitle className='font-bold text-foreground text-2xl'>
                                 Edit Your Moment
                             </CardTitle>
-                            <CardDescription className='text-muted dark:text-muted-foreground'>
+                            <CardDescription className='text-muted-foreground'>
                                 Update the details of this special memory
                             </CardDescription>
                         </div>
@@ -245,6 +231,7 @@ export function EditMomentForm({
                                 <Button
                                     type='button'
                                     variant='destructive'
+                                    className='cursor-pointer'
                                     onClick={() => setShowDeleteDialog(true)}
                                     disabled={isDeleting}
                                 >
@@ -270,6 +257,7 @@ export function EditMomentForm({
                                     </Button>
                                     <Button
                                         type='submit'
+                                        className='cursor-pointer'
                                         disabled={isLoading || !title.trim()}
                                     >
                                         {isLoading

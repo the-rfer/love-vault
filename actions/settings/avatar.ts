@@ -1,12 +1,9 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import { revalidatePath } from 'next/cache';
 
 export async function uploadProfilePhoto(userId: string, file: File) {
     const supabase = await createClient();
-    // const ext = file.name.split('.').pop();
-    // const path = `${userId}/profile.${ext}`;
     const path = `${userId}/profile`;
 
     const { error: uploadError } = await supabase.storage
@@ -23,20 +20,15 @@ export async function uploadProfilePhoto(userId: string, file: File) {
         .eq('id', userId);
 
     if (updateError) return { error: 'Failed to update profile photo' };
+
     return { url: data.publicUrl };
 }
 
 export async function deleteProfilePhoto(userId: string, photoUrl: string) {
     const supabase = await createClient();
 
-    // remove current photo
     try {
-        const { pathname } = new URL(photoUrl);
-
-        const path = pathname.replace(
-            '/storage/v1/object/public/profile-photos/',
-            ''
-        );
+        const path = photoUrl.split('/').slice(-2).join('/');
 
         const { error } = await supabase.storage
             .from('profile-photos')
@@ -59,8 +51,6 @@ export async function deleteProfilePhoto(userId: string, photoUrl: string) {
         .eq('id', userId);
 
     if (error) return { error: 'Failed to delete photo' };
-
-    revalidatePath('/settings');
 
     return { success: true };
 }

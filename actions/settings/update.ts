@@ -1,13 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-
-interface ProfileUpdate {
-    username: string;
-    partner_name: string;
-    partner_birthday: string | null;
-    relationship_start_date: string;
-}
+import { ProfileUpdate } from '@/types/app';
 
 export async function updateProfile(userId: string, profile: ProfileUpdate) {
     const supabase = await createClient();

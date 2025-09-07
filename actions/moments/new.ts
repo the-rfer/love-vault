@@ -47,7 +47,7 @@ export async function createMoment(formData: FormData, userId: string) {
 
         if (error) throw error;
 
-        revalidatePath('/dashboard');
+        revalidatePath('/');
         return { success: true };
     } catch (err) {
         console.error('Error creating moment:', err);

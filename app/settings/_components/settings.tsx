@@ -11,16 +11,7 @@ import { ProfilePhotoSection } from './photo';
 import { PersonalInfoSection } from './personal';
 import { PartnerInfoSection } from './partner';
 import { AccountSection } from './account';
-
-export interface Profile {
-    id: string;
-    username: string;
-    email: string;
-    partner_name: string;
-    partner_birthday: string | null;
-    relationship_start_date: string;
-    profile_photo_url: string | null;
-}
+import { Profile } from '@/types/app';
 
 export function Settings({
     user,
@@ -43,7 +34,7 @@ export function Settings({
             toast.success('Profile updated successfully!');
         }
         setIsSaving(false);
-        router.push('/dashboard');
+        router.push('/');
     };
 
     return (

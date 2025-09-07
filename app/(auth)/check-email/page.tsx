@@ -50,7 +50,7 @@ export default function CheckEmailPage() {
                             variant='outline'
                             className='bg-transparent w-full'
                         >
-                            <Link href='/auth/login'>Back to Sign In</Link>
+                            <Link href='/login'>Back to Sign In</Link>
                         </Button>
                     </CardContent>
                 </Card>

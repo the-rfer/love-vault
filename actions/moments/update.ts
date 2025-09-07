@@ -1,17 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-
-interface UpdateMomentArgs {
-    momentId: string;
-    userId: string;
-    title: string;
-    description: string;
-    momentDate: Date;
-    files: File[];
-    existingMediaUrls: string[];
-    removedMediaUrls: string[];
-}
+import { UpdateMomentArgs } from '@/types/app';
 
 export async function updateMoment({
     momentId,
@@ -25,11 +15,11 @@ export async function updateMoment({
 }: UpdateMomentArgs) {
     const supabase = await createClient();
 
-    // remove from bucket
+    // remove old from bucket
     await Promise.all(
         removedMediaUrls.map(async (url) => {
             try {
-                const path = url.split('/').slice(-2).join('/'); // adjust according to your URL scheme
+                const path = url.split('/').slice(-2).join('/');
                 await supabase.storage.from('moment-media').remove([path]);
             } catch (err) {
                 console.error('Failed to delete removed media:', url, err);

@@ -3,7 +3,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Profile } from './settings';
+import { DatePicker } from '@/components/date-picker';
+import { formatDateToLocalString } from '@/lib/utils';
+import { Profile } from '@/types/app';
 
 export function PartnerInfoSection({
     profile,
@@ -32,28 +34,37 @@ export function PartnerInfoSection({
                 </div>
                 <div className='space-y-2'>
                     <Label>Partner&apos;s Birthday</Label>
-                    <Input
-                        type='date'
-                        value={profile.partner_birthday || ''}
-                        onChange={(e) =>
+
+                    <DatePicker
+                        date={
+                            profile.partner_birthday
+                                ? new Date(profile.partner_birthday)
+                                : undefined
+                        }
+                        onDateChange={(date) =>
                             setProfile({
                                 ...profile,
-                                partner_birthday: e.target.value,
+                                partner_birthday: formatDateToLocalString(
+                                    date
+                                ) as string,
                             })
                         }
                     />
                 </div>
                 <div className='space-y-2'>
                     <Label>Relationship Start</Label>
-                    <Input
-                        type='date'
-                        value={profile.relationship_start_date}
-                        onChange={(e) =>
-                            setProfile({
-                                ...profile,
-                                relationship_start_date: e.target.value,
-                            })
-                        }
+
+                    <DatePicker
+                        date={new Date(profile.relationship_start_date)}
+                        onDateChange={(date) => {
+                            if (date) {
+                                setProfile({
+                                    ...profile,
+                                    relationship_start_date:
+                                        formatDateToLocalString(date) as string,
+                                });
+                            }
+                        }}
                     />
                 </div>
             </CardContent>

@@ -6,15 +6,10 @@ import { useRouter } from 'next/navigation';
 import { Moment } from '../[id]/page';
 import { getSignedUrl } from '@/actions/signed-url';
 import { deleteMoment } from '@/actions/moments/delete';
-
 import { Details } from './details';
 import { Gallery } from './gallery';
 import { TimelineInfo } from './timeline-info';
-
-export interface SignedMedia {
-    url: string;
-    type: 'image' | 'video' | 'other';
-}
+import { SignedMedia } from '@/types/app';
 
 export function MomentDetails({ moment }: { moment: Moment }) {
     const router = useRouter();
@@ -29,7 +24,7 @@ export function MomentDetails({ moment }: { moment: Moment }) {
 
             if (result.success) {
                 toast.success(result.message);
-                router.push('/dashboard');
+                router.push('/');
             } else {
                 toast.error(result.message);
             }

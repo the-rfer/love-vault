@@ -15,7 +15,7 @@ export async function getCurrentUserOrRedirect() {
         const type = 'error';
 
         redirect(
-            `/auth/login?message=${encodeURIComponent(
+            `/login?message=${encodeURIComponent(
                 message
             )}&type=${encodeURIComponent(type)}`
         );

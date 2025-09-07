@@ -3,9 +3,9 @@
 import { useState, useTransition, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { fetchMoments } from '@/actions/dashboard/moments';
-import { Timeline } from '@/app/dashboard/_components/timeline-items';
+import { Timeline } from '@/app/(dashboard)/_components/timeline-items';
 import { Loading } from '@/components/loading';
-import { type Moment } from '../types';
+import { Moment } from '@/types/app';
 
 export function TimelineClient({ userId }: { userId: string }) {
     const [moments, setMoments] = useState<Moment[]>([]);
@@ -57,7 +57,7 @@ export function TimelineClient({ userId }: { userId: string }) {
             )}
 
             {!hasMore && moments.length > 0 && (
-                <div className='py-4 text-foreground dark:text-muted-foreground text-sm text-center'>
+                <div className='py-4 text-muted-foreground text-sm text-center'>
                     There are no more moments
                 </div>
             )}

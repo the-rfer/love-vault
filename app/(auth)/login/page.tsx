@@ -8,17 +8,11 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { LoginForm } from '@/app/auth/_components/login-form';
-import { OauthForm } from '@/app/auth/_components/oauth-form';
-import { redirect, type RedirectType } from 'next/navigation';
-import { getCurrentUserOrRedirect } from '@/actions/auth/user';
+import { LoginForm } from '@/app/(auth)/_components/login-form';
+import { OauthForm } from '@/app/(auth)/_components/oauth-form';
+import { Suspense } from 'react';
 
 export default async function LoginPage() {
-    // TODO: remove in prod, commented so i can debug login page without being redirected and being authenticated
-
-    // const user = await getCurrentUserOrRedirect();
-    // if (user) redirect('/dashboard', RedirectType.replace);
-
     return (
         <div className='flex justify-center items-center p-4 min-h-screen'>
             <div className='w-full max-w-md'>
@@ -38,8 +32,9 @@ export default async function LoginPage() {
                     </CardHeader>
 
                     <CardContent className='space-y-6'>
-                        <LoginForm />
-
+                        <Suspense>
+                            <LoginForm />
+                        </Suspense>
                         <div className='relative'>
                             <div className='absolute inset-0 flex items-center'>
                                 <Separator className='w-full' />
@@ -59,7 +54,7 @@ export default async function LoginPage() {
                         <div className='text-muted-foreground text-sm text-center'>
                             Don&apos;t have an account?{' '}
                             <Link
-                                href='/auth/sign-up'
+                                href='/sign-up'
                                 className='font-medium text-primary hover:underline'
                             >
                                 Sign up

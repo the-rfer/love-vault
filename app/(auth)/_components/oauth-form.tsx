@@ -4,6 +4,7 @@ import { useActionState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { oauthLoginAction } from '@/actions/auth/oauth';
 import { Button } from '@/components/ui/button';
+import { OauthProviders } from '@/types/app';
 
 const initialState = {
     error: {
@@ -13,9 +14,7 @@ const initialState = {
     redirect: undefined,
 };
 
-type Providers = 'google' | 'facebook' | 'discord';
-
-export function OauthForm({ provider }: { provider: Providers }) {
+export function OauthForm({ provider }: { provider: OauthProviders }) {
     const router = useRouter();
 
     const [state, formAction, pending] = useActionState(
@@ -25,7 +24,6 @@ export function OauthForm({ provider }: { provider: Providers }) {
 
     useEffect(() => {
         if (state.success) {
-            console.log('Redirecting...');
             router.push(state.redirect!);
         }
     }, [state.success, state.redirect, router]);
@@ -53,7 +51,7 @@ export function OauthForm({ provider }: { provider: Providers }) {
     );
 }
 
-function ProviderIcon({ provider }: { provider: Providers }) {
+function ProviderIcon({ provider }: { provider: OauthProviders }) {
     // add icons whenever new providers are added
     switch (provider) {
         case 'google':

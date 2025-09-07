@@ -11,9 +11,9 @@ import {
     uploadProfilePhoto,
     deleteProfilePhoto,
 } from '@/actions/settings/avatar';
-import { Profile } from './settings';
 import { useEffect, useState, type ChangeEvent } from 'react';
 import { getSignedUrl } from '@/actions/signed-url';
+import { Profile } from '@/types/app';
 
 export function ProfilePhotoSection({
     profile,
@@ -66,7 +66,7 @@ export function ProfilePhotoSection({
         }
 
         updateUrl();
-    }, [profile]);
+    }, [profile.profile_photo_url]);
 
     return (
         <Card>

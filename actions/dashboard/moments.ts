@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import { type Moment } from '@/app/dashboard/types';
+import { Moment } from '@/types/app';
 
 export async function fetchMoments(
     userId: string,

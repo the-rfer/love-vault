@@ -4,11 +4,11 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip } from 'react-tooltip';
 import { useEffect, useState, useTransition, cloneElement } from 'react';
 import ActivityCalendar from 'react-activity-calendar';
-import { type ActivityData } from '../types';
 import { fetchActivity } from '@/actions/dashboard/activity';
 import { Loading } from '@/components/loading';
 import { Card, CardContent } from '@/components/ui/card';
 import { CalendarIcon } from 'lucide-react';
+import { ActivityData } from '@/types/app';
 
 //TODO: make these options available as user configurations
 const CONFIG = {

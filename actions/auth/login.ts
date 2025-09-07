@@ -1,29 +1,8 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { LoginActionState } from '@/types/app';
 import { z } from 'zod';
-
-type StateType =
-    | {
-          error: {
-              email: string | undefined;
-              password: string | undefined;
-              general?: undefined;
-          };
-          success: boolean;
-      }
-    | {
-          error: {
-              general: string;
-              email?: undefined;
-              password?: undefined;
-          };
-          success: boolean;
-      }
-    | {
-          error: undefined;
-          success: boolean;
-      };
 
 const loginSchema = z.object({
     email: z.email({ message: 'Invalid email address' }),
@@ -32,7 +11,7 @@ const loginSchema = z.object({
         .min(6, { message: 'Password must be at least 6 characters long' }),
 });
 
-export async function loginAction(_: StateType, formData: FormData) {
+export async function loginAction(_: LoginActionState, formData: FormData) {
     const validatedFields = loginSchema.safeParse({
         email: formData.get('email'),
         password: formData.get('password'),

@@ -1,31 +1,8 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { SignUpActionState } from '@/types/app';
 import { z } from 'zod';
-
-type StateType =
-    | {
-          error: {
-              email: string | undefined;
-              password: string | undefined;
-              confirmPassword: string | undefined;
-              general?: undefined;
-          };
-          success: boolean;
-      }
-    | {
-          error: {
-              general: string;
-              email?: undefined;
-              password?: undefined;
-              confirmPassword?: undefined;
-          };
-          success: boolean;
-      }
-    | {
-          error: undefined;
-          success: boolean;
-      };
 
 const signupSchema = z
     .object({
@@ -40,7 +17,7 @@ const signupSchema = z
         path: ['confirmPassword'],
     });
 
-export async function signinAction(_: StateType, formData: FormData) {
+export async function signinAction(_: SignUpActionState, formData: FormData) {
     const validatedFields = signupSchema.safeParse({
         email: formData.get('email'),
         password: formData.get('password'),

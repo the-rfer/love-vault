@@ -88,8 +88,8 @@ export function FileUpload({
                     onChange={(e) => handleFiles(e.target.files)}
                     className='hidden'
                 />
-                <Upload className='mx-auto mb-2 w-8 h-8 text-muted dark:text-muted-foreground' />
-                <p className='mb-2 text-muted dark:text-muted-foreground text-sm'>
+                <Upload className='mx-auto mb-2 w-8 h-8 text-muted-foreground' />
+                <p className='mb-2 text-muted-foreground text-sm'>
                     Drag and drop files here, or{' '}
                     <button
                         type='button'
@@ -99,7 +99,7 @@ export function FileUpload({
                         browse
                     </button>
                 </p>
-                <p className='text-muted dark:text-muted-foreground text-xs'>
+                <p className='text-muted-foreground text-xs'>
                     {files.length}/{maxFiles} files • Images and videos only
                 </p>
             </div>

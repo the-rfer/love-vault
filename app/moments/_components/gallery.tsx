@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ImageLoader } from './image-loader';
 import { Loading } from '@/components/loading';
-import { SignedMedia } from './moment-details';
+import { SignedMedia } from '@/types/app';
 
 export function Gallery({
     signedUrls,

@@ -27,7 +27,7 @@ export function SignInForm() {
 
     useEffect(() => {
         if (state.success) {
-            router.push('/auth/check-email');
+            router.push('/check-email');
         }
     }, [state.success, router]);
 
@@ -44,7 +44,9 @@ export function SignInForm() {
                     className='h-11'
                 />
                 {state.error?.email && (
-                    <p className='text-red-600 text-sm'>{state.error?.email}</p>
+                    <p className='text-destructive text-sm'>
+                        {state.error?.email}
+                    </p>
                 )}
             </div>
             <div className='space-y-2'>
@@ -58,7 +60,7 @@ export function SignInForm() {
                     className='h-11'
                 />
                 {state.error?.password && (
-                    <p className='text-red-600 text-sm'>
+                    <p className='text-destructive text-sm'>
                         {state.error?.password}
                     </p>
                 )}
@@ -74,13 +76,15 @@ export function SignInForm() {
                     className='h-11'
                 />
                 {state.error?.confirmPassword && (
-                    <p className='text-red-600 text-sm'>
+                    <p className='text-destructive text-sm'>
                         {state.error?.confirmPassword}
                     </p>
                 )}
             </div>
             {state.error?.general && (
-                <p className='text-red-600 text-sm'>{state.error?.general}</p>
+                <p className='text-destructive text-sm'>
+                    {state.error?.general}
+                </p>
             )}
             <Button
                 type='submit'

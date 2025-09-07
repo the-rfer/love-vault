@@ -1,20 +1,15 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { EditMomentForm } from '../../_components/edit-form';
+import { getCurrentUserOrRedirect } from '@/actions/auth/user';
 
 export default async function EditMomentPage({
     params,
 }: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }) {
     const supabase = await createClient();
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-        redirect('/auth/login');
-    }
+    const user = await getCurrentUserOrRedirect();
 
     const { id } = await params;
 

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Settings } from 'lucide-react';
 import { getSignedUrl } from '@/actions/signed-url';
-import { type Profile } from '@/app/dashboard/types';
+import { Profile } from '@/types/app';
 
 export async function ProfileHeader({ profile }: { profile: Profile }) {
     const signedUrl = await getSignedUrl({
@@ -25,7 +25,7 @@ export async function ProfileHeader({ profile }: { profile: Profile }) {
                     <h1 className='font-bold text-foreground text-2xl'>
                         Hello {profile.username} 👋
                     </h1>
-                    <p className='text-muted dark:text-muted-foreground'>
+                    <p className='text-muted-foreground'>
                         Welcome to {profile.partner_name}&apos;s vault!
                     </p>
                 </div>
