@@ -7,3 +7,4 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 -   Released live version of the app.
+-   Added vercel Analytics and Speed insights
