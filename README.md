@@ -7,7 +7,7 @@ Built with [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.co
 
 ## ✨ Demo
 
-🔗 **Live Demo**: [love-vault.vercel.app](https://love-vault-three.vercel.app/)
+🔗 **Live Demo**: [love-vault-three.vercel.app](https://love-vault-three.vercel.app/)
 
 📸 **Screenshots**
 
@@ -74,7 +74,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 Deploy with one click on **Vercel**:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/your-username/love-vault)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/the-rfer/love-vault)
 
 ---
 
