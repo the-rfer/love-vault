@@ -137,7 +137,7 @@ export function Timeline({ items }: TimelineProps) {
                                                     </p>
                                                 </div>
                                                 {item.media_urls?.length && (
-                                                    <Avatar className='rounded-lg'>
+                                                    <Avatar className='rounded-lg w-16 h-16'>
                                                         <AvatarImage
                                                             src={
                                                                 url || undefined

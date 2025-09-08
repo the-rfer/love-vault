@@ -15,7 +15,7 @@ export default async function NewMomentPage() {
     const user = await getCurrentUserOrRedirect();
 
     return (
-        <div className='bg-background min-h-screen'>
+        <div className='min-h-screen'>
             <div className='mx-auto p-4 max-w-4xl'>
                 <div className='mb-6'>
                     <Button variant='ghost' asChild className='mb-4'>

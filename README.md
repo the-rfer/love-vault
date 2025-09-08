@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💖 Love Vault
 
-## Getting Started
+A modern web app to store and celebrate your special memories.
+Built with [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/), and deployed on [Vercel](https://vercel.com/).
 
-First, run the development server:
+---
+
+## ✨ Demo
+
+🔗 **Live Demo**: [love-vault.vercel.app](https://love-vault.vercel.app)
+
+📸 **Screenshots**
+
+![Vault dashboard](./public/screenshots/dashboard.png)
+![Moment details](./public/screenshots/details.png)
+![Create new moments](./public/screenshots/new.png)
+
+---
+
+## 🚀 Features
+
+-   🗂️ Create and manage your personal memory vaults
+-   🖼️ Add photos, notes, and special dates
+-   🎨 Clean, modern, and intuitive design
+-   ⚡ Fast & optimized (Next.js + Vercel)
+
+---
+
+## 🛠️ Tech Stack
+
+-   **Framework**: Next.js (App Router) + TypeScript
+-   **Styling**: Tailwind CSS, shadcn/ui
+-   **Animations**: Framer Motion
+-   **Validation**: Zod
+-   **Database**: Supabase
+-   **Hosting**: Vercel
+-   **Analytics**: Vercel Analytics
+
+---
+
+## 📦 Installation
+
+Clone and set up locally:
 
 ```bash
+# Clone repo
+git clone https://github.com/the-rfer/love-vault.git
+cd love-vault
+
+# Install dependencies
+npm install
+
+# Start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Your app will be live at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔑 Environment Variables
 
-## Learn More
+Create a `.env.local` file in the project root and add:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Deployment
 
-## Deploy on Vercel
+Deploy with one click on **Vercel**:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/your-username/love-vault)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📊 Analytics
+
+-   **Vercel Analytics**: enable in the Vercel dashboard.
+
+---
+
+## 🗂️ Project Structure
+
+```
+love-vault/
+├── app/                # Next.js app router pages
+├── components/         # Reusable UI components
+├── actions/            # Server actions
+├── lib/                # Utilities & helpers
+├── scripts/            # Executable SQL scripts for Supabase
+├── public/             # Static assets
+└── ...
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+---
+
+## 📜 License
+
+MIT License © [Rúben Fernandes](https://github.com/the-rfer)

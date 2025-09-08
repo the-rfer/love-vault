@@ -1,10 +1,11 @@
-import { notFound } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
 import { getCurrentUserOrRedirect } from '@/actions/auth/user';
-import { MomentDetails } from '../_components/moment-details';
 import { Button } from '@/components/ui/button';
+import { createClient } from '@/lib/supabase/server';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
+
+import { MomentDetails } from '../_components/moment-details';
 
 export interface Moment {
     id: string;
@@ -40,7 +41,7 @@ export default async function MomentPage({
     if (error || !moment) return notFound();
 
     return (
-        <div className='bg-background min-h-screen'>
+        <div className='min-h-screen'>
             <div className='mx-auto p-4 max-w-4xl'>
                 {/* Header */}
                 <div className='mb-6'>

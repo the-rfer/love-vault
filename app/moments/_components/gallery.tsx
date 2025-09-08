@@ -97,7 +97,7 @@ function GalleryModal({
         selectedMediaIndex !== null &&
         signedUrls.length > 0 && (
             <div
-                className='z-50 fixed inset-0 flex justify-center items-center bg-black/80 p-4'
+                className='z-50 fixed inset-0 flex justify-center items-center bg-black/80 p-4 h-screen'
                 onClick={() => setSelectedMediaIndex(null)}
             >
                 <div className='relative max-w-4xl max-h-full'>
