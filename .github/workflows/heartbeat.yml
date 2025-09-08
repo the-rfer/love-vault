@@ -1,0 +1,21 @@
+name: Supabase Heartbeat
+
+on:
+    schedule:
+        - cron: '0 5 * * *' # runs every day at 05:00 UTC
+    workflow_dispatch: # allow manual run
+
+jobs:
+    ping-db:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Send heartbeat insert
+              run: |
+                  curl -X POST "$SUPABASE_URL/rest/v1/heartbeat" \
+                  -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
+                  -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+                  -H "Content-Type: application/json" \
+                  -d '{}'
+              env:
+                  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+                  SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
