@@ -7,7 +7,7 @@ Built with [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.co
 
 ## ✨ Demo
 
-🔗 **Live Demo**: [love-vault.vercel.app](https://love-vault.vercel.app)
+🔗 **Live Demo**: [love-vault.vercel.app](https://love-vault-three.vercel.app/)
 
 📸 **Screenshots**
 
