@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ImageIcon, Video } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ImageLoader } from './image-loader';
 import { Loading } from '@/components/loading';
 import { SignedMedia } from '@/types/app';
@@ -22,7 +22,7 @@ export function Gallery({
     return (
         <>
             <Card className='bg-card/80 shadow-lg backdrop-blur-sm border-0'>
-                <CardContent className='p-6'>
+                <CardHeader>
                     <h2 className='flex items-center mb-4 font-semibold text-lg'>
                         <ImageIcon className='mr-2 w-5 h-5 text-primary' />
                         Media
@@ -32,7 +32,8 @@ export function Gallery({
                             </span>
                         )}
                     </h2>
-
+                </CardHeader>
+                <CardContent className='p-2 md:p-6'>
                     {isSigning ? (
                         <div className='flex justify-center items-center py-12'>
                             <Loading />

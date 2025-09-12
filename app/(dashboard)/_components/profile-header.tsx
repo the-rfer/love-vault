@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Settings } from 'lucide-react';
 import { getSignedUrl } from '@/actions/signed-url';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import { Profile } from '@/types/app';
+import { Settings } from 'lucide-react';
+import Link from 'next/link';
 
 export async function ProfileHeader({ profile }: { profile: Profile }) {
     const signedUrl = await getSignedUrl({
@@ -31,7 +31,7 @@ export async function ProfileHeader({ profile }: { profile: Profile }) {
                 </div>
             </div>
 
-            <div className='flex items-center space-x-2'>
+            <div className='flex md:flex-row flex-col items-center md:space-x-2 space-y-2 md:space-y-0'>
                 <ThemeToggle />
                 <Button
                     variant='outline'

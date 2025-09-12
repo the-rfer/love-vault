@@ -42,7 +42,7 @@ export default async function MomentPage({
 
     return (
         <div className='min-h-screen'>
-            <div className='mx-auto p-4 max-w-4xl'>
+            <div className='mx-auto p-4 max-w-sm md:max-w-lg lg:max-w-4xl'>
                 {/* Header */}
                 <div className='mb-6'>
                     <Button variant='ghost' asChild className='mb-4'>

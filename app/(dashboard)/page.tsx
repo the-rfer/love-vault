@@ -1,12 +1,13 @@
-import { Suspense } from 'react';
-import { Loading as LoadingSpinner } from '@/components/loading';
-import { ActivityCalendarClient } from './_components/activity';
-import { TimelineClient } from './_components/timeline';
-import { ProfileHeader } from './_components/profile-header';
-import { NewMoment } from './_components/new-moment';
 import { getCurrentUserOrRedirect } from '@/actions/auth/user';
 import { getUserProfile } from '@/actions/profile';
+import { Loading as LoadingSpinner } from '@/components/loading';
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
+
+import { ActivityCalendarClient } from './_components/activity';
+import { NewMoment } from './_components/new-moment';
+import { ProfileHeader } from './_components/profile-header';
+import { TimelineClient } from './_components/timeline';
 
 export default async function DashboardPage() {
     const user = await getCurrentUserOrRedirect();
@@ -14,7 +15,7 @@ export default async function DashboardPage() {
     if (!profile.isOnboarded) redirect('/onboarding');
 
     return (
-        <div className='space-y-6 mx-auto p-4 w-4xl'>
+        <div className='space-y-6 mx-auto p-4 w-sm md:w-md lg:w-4xl'>
             <ProfileHeader profile={profile} />
             <NewMoment />
 

@@ -2,13 +2,15 @@
 
 import { formatDate } from '@/lib/utils';
 import { Moment } from '../[id]/page';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 export function TimelineInfo({ moment }: { moment: Moment }) {
     return (
         <Card className='bg-card/80 shadow-lg backdrop-blur-sm border-0'>
-            <CardContent className='p-6'>
+            <CardHeader>
                 <h2 className='mb-4 font-semibold text-lg'>Timeline Context</h2>
+            </CardHeader>
+            <CardContent className='p-2 md:p-6'>
                 <div className='space-y-3'>
                     <div className='flex justify-between items-center bg-muted/50 p-3 rounded-lg'>
                         <span className='text-muted-foreground text-sm'>

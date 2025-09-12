@@ -227,11 +227,11 @@ export function EditMomentForm({
                                 />
                             </div>
 
-                            <div className='flex justify-between pt-4'>
+                            <div className='flex md:flex-row flex-col justify-between space-y-2 md:space-y-0 pt-4'>
                                 <Button
                                     type='button'
                                     variant='destructive'
-                                    className='cursor-pointer'
+                                    className='hidden md:block cursor-pointer'
                                     onClick={() => setShowDeleteDialog(true)}
                                     disabled={isDeleting}
                                 >
@@ -245,11 +245,12 @@ export function EditMomentForm({
                                     handleDelete={handleDelete}
                                 />
 
-                                <div className='flex space-x-3'>
+                                <div className='flex md:flex-row flex-col space-x-3 space-y-2 md:space-y-0'>
                                     <Button
                                         type='button'
                                         variant='outline'
                                         asChild
+                                        className='w-full md:w-fit'
                                     >
                                         <Link href={`/moments/${moment.id}`}>
                                             Cancel

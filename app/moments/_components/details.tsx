@@ -29,20 +29,25 @@ export function Details({
 
     return (
         <Card className='bg-card/80 shadow-lg backdrop-blur-sm border-0'>
-            <CardHeader>
-                <CardTitle>{moment.title}</CardTitle>
+            <CardHeader className='md:hidden'>
+                <CardTitle className='flex items-center'>
+                    <div className='flex justify-center items-center bg-primary/20 mr-2 rounded-full w-10 h-10'>
+                        <Heart className='w-5 h-5 text-primary' />
+                    </div>
+                    {moment.title}
+                </CardTitle>
             </CardHeader>
-            <CardContent className='p-6'>
-                <div className='flex justify-between items-start mb-4'>
+            <CardContent className='p-2 md:p-6'>
+                <div className='flex md:flex-row flex-col-reverse justify-between items-start mb-4'>
                     <div className='flex items-center space-x-3'>
-                        <div className='flex justify-center items-center bg-primary/20 rounded-full w-10 h-10'>
+                        <div className='hidden md:flex justify-center items-center bg-primary/20 rounded-full w-10 h-10'>
                             <Heart className='w-5 h-5 text-primary' />
                         </div>
                         <div>
-                            <h1 className='font-bold text-foreground text-2xl'>
+                            <h1 className='hidden md:block font-bold text-foreground text-2xl'>
                                 {moment.title}
                             </h1>
-                            <div className='flex items-center space-x-4 mt-2'>
+                            <div className='hidden md:flex items-center space-x-4 mt-2'>
                                 <div className='flex items-center space-x-1 text-muted-foreground text-sm'>
                                     <Calendar className='w-4 h-4' />
                                     <span>
@@ -58,15 +63,15 @@ export function Details({
                             </div>
                         </div>
                     </div>
-                    <div className='flex items-center space-x-2'>
+                    <div className='flex items-center gap-2 md:gap-0 md:space-x-2 md:m-0 mt-[-30px] ml-auto'>
                         <Button
                             variant='outline'
                             asChild
                             className='bg-transparent'
                         >
                             <Link href={`/moments/${moment.id}/edit`}>
-                                <Edit className='mr-2 w-4 h-4' />
-                                Edit
+                                <Edit className='mr-0 md:mr-2 w-4 h-4' />
+                                <span className='hidden md:block'>Edit</span>
                             </Link>
                         </Button>
                         <Button
@@ -74,8 +79,10 @@ export function Details({
                             onClick={() => setShowDeleteDialog(true)}
                             disabled={isPending}
                         >
-                            <Trash2 className='mr-2 w-4 h-4' />
-                            {isPending ? 'Deleting...' : 'Delete'}
+                            <Trash2 className='mr-0 md:mr-2 w-4 h-4' />
+                            <span className='hidden md:block'>
+                                {isPending ? 'Deleting...' : 'Delete'}
+                            </span>
                         </Button>
                     </div>
                 </div>
